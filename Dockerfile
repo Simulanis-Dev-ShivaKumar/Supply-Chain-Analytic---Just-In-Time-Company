@@ -1,17 +1,17 @@
-# Start with an official Jupyter Notebook image
-FROM jupyter/base-notebook
+# Use an official Python runtime as a parent image
+FROM python:3.8
 
-# Set working directory
-WORKDIR /home/jovyan
+# Set the working directory to /app
+WORKDIR /app
 
-# Copy the repository content into the container
-COPY . /home/jovyan/
+# Install Jupyter Notebook
+RUN pip install jupyter
 
-# Install any required Python dependencies (if you have a requirements.txt)
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose the port for Jupyter Notebook
+# Make port 8888 available to the world outside this container
 EXPOSE 8888
 
-# Command to run Jupyter notebook with no token and no browser
-CMD ["jupyter", "notebook", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root"]
+# Define environment variable
+ENV NAME World
+
+# Run Jupyter Notebook when the container launches
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
